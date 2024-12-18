@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2024 Digg - The Agency for Digital Government
+#
+# SPDX-License-Identifier: CC0-1.0
+
+name: eudiw-wallet-metadata-lib-poc workflow
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/test.yml
+  publish-jar:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test]
+    uses: ./.github/workflows/publish-to-github-packages.yml

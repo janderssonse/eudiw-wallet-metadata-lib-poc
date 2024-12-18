@@ -1,0 +1,50 @@
+.gradle
+build/
+target/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+.DS_Store
+
+# Intelij
+*.iml
+.idea
+out
+*.iws
+*.ipr
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+# logs
+/traefik/logs/
+*.log
+
+
+.env
+wallet-cert.pem
+
+
+*.log
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+.npm
+node_modules
+**/megalinter-reports
+
+issuer-jwt-ec256-key-pair.pem
+issuer-jwt-ec256-public-key.pem

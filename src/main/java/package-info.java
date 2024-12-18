@@ -1,0 +1,3 @@
+/**
+ * OpenID federation metadata extensions
+ */
