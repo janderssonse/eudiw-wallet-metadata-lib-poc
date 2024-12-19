@@ -20,5 +20,8 @@ jobs:
     uses: ./.github/workflows/test.yml
   publish-jar:
     if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: read
+      packages: write
     needs: [test]
     uses: ./.github/workflows/publish-to-github-packages.yml
