@@ -6,6 +6,10 @@ name: Publish artifact to github packages
 
 on: [workflow_call]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   publish:
     name: Build and Publish
@@ -22,8 +26,8 @@ jobs:
       - name: Set up Java for publishing to GitHub Packages
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: "17"
+          distribution: "temurin"
 
       - name: Build, Generate SBOM, and Deploy
         env:
