@@ -45,7 +45,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/janderssonse/eudiw-wallet-metadata-lib-poc</url>
+            <url>https://maven.pkg.github.com/janderssonset /eudiw-wallet-metadata-lib-poc</url>
         </repository>
     </distributionManagement>
 
@@ -108,7 +108,7 @@
             <groupId>org.jreleaser</groupId>
             <artifactId>jreleaser-maven-plugin</artifactId>
             <version>1.16.0</version>
-            <configuration>
+        <configuration>
         <configFile>${project.basedir}/jreleaser.yml</configFile>
     </configuration>
 </plugin>

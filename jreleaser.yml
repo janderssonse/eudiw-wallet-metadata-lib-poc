@@ -3,11 +3,16 @@ environment:
   properties:
     projectVersion: '{{git.tag.name}}'
 
+hooks:
+  script:
+    before:
+      - run: mvn versions:set -DnewVersion=${env.RELEASE_VERSION} -DgenerateBackupPoms=false
+       # description: "Update pom.xml to the new release version"
 # Basic project metadata
 project:
   name: eudiw-wallet-metadata-library-poc
 #  version: '{{projectVersion}}'
-#  version: '{{projectVersion}}'
+  #version: '{{projectVersion}}'
   description: A lib for eudiw-wallet-issuer-poc. Test and PoC only
   license: EUPL-1.2 
   copyright: 2025 Digg - The Agency for Digital Government
@@ -18,6 +23,7 @@ project:
     fullChangelog: false
 
 # GitHub release configuration
+
 release:
   github:
     owner: janderssonse
