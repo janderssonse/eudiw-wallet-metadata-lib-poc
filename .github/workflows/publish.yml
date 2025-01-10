@@ -1,0 +1,89 @@
+name: Release And Publish
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: mainenv
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # For changelog generation to have full history
+      
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.JRELEASER_GPG_SECRET_KEY }}
+          passphrase: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true 
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+          
+      
+      - name: Update POM version
+        run: |
+          echo "Tag: ${GITHUB_REF_NAME}"
+          TAG=${GITHUB_REF_NAME#v}
+          echo "Version: ${TAG}"
+          mvn --batch-mode --no-transfer-progress versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false
+       
+      - name: Generate Changelog
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn --batch-mode -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml jreleaser:changelog
+
+      - name: Move Changelog
+        run: mv target/jreleaser/release/CHANGELOG.md ./CHANGELOG.md
+
+      - name: Switch to main branch
+        run: |
+          git fetch origin main:main
+          git checkout main
+          git branch --set-upstream-to=origin/main main
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: |
+            chore(release): ${{ github.ref_name }}
+            
+            Skip CI as this is an automated release commit.
+            
+            [skip ci]
+          file_pattern: 'pom.xml CHANGELOG.md'
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_options: '--signoff'
+          branch: main
+          
+      - name: Release with JReleaser
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.JRELEASER_GITHUB_TOKEN }}
+          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.JRELEASER_GPG_PUBLIC_KEY }}
+          JRELEASER_GPG_SECRET_KEY: ${{ secrets.JRELEASER_GPG_SECRET_KEY }}
+          JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
+          M2_USER_NAME: ${{ secrets.M2_USER_NAME }}
+          M2_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn --batch-mode --no-transfer-progress -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml deploy jreleaser:full-release -Djreleaser.changelog.enabled=false
+        
+      - name: JReleaser output
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: jreleaser-logs
+          path: |
+            target/jreleaser/trace.log
+            target/jreleaser/output.properties

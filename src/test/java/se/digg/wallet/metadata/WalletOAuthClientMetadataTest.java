@@ -50,6 +50,8 @@ class WalletOAuthClientMetadataTest {
 
     WalletOAuthClientMetadata walletOAuthClientMetadata = WalletOAuthClientMetadata.walletOauthClientMetadataBuilder()
       .credentialOfferEndpoint("https://example.com/credential-offer-endpoint")
+      .clientName(LanguageObject.builder(String.class)
+        .build())
       .organizationName(LanguageObject.builder(String.class)
         .defaultValue("Organization inc")
         .langValue("sv", "Organisation AB")
