@@ -37,7 +37,7 @@ class CredentialIssuerMetadataTest {
         .scope("SD_JWT_VC_example_in_OpenID4VCI")
         .cryptographicBindingMethodsSupported(List.of("binding1", "binding2"))
         .credentialSigningAlgValuesSupported(List.of("RS256", "ES256"))
-        .proofType("jwt", new AbstractCredentialConfiguration.ProofType(List.of("ES256")))
+        .proofType("jwt", new SdJwtCredentialConfiguration.ProofType(List.of("ES256")))
         .display(List.of(
           Display.builder()
             .name("Credential name")

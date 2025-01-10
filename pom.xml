@@ -3,21 +3,31 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>se.digg.wallet</groupId>
     <artifactId>eudiw-wallet-metadata-lib-poc</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 
-    <name>Wallet metadata types</name>
+    <name>EUDIW Wallet Metadata Lib PoC</name>
+  <description>Sample app</description>
+  <url>https://acme.com/app</url>
+  <inceptionYear>2021</inceptionYear>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
         <java.version>21</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>2.0.16</slf4j.version>
     </properties>
 
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://spdx.org/licenses/Apache-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
     <repositories>
         <repository>
             <id>central</id>
@@ -35,7 +45,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/diggsweden/eudiw-wallet-metadata-lib-poc</url>
+            <url>https://maven.pkg.github.com/janderssonse/eudiw-wallet-metadata-lib-poc</url>
         </repository>
     </distributionManagement>
 
@@ -83,6 +93,7 @@
         </dependency>
     </dependencies>
 
+    
     <build>
         <plugins>
             <plugin>
@@ -93,37 +104,61 @@
                     <release>${java.version}</release>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <skip>false</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.cyclonedx</groupId>
-                <artifactId>cyclonedx-maven-plugin</artifactId>
-                <version>2.7.9</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>makeAggregateBom</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <projectType>library</projectType>
-                    <schemaVersion>1.4</schemaVersion>
-                    <includeBomSerialNumber>true</includeBomSerialNumber>
-                    <includeCompileScope>true</includeCompileScope>
-                    <includeProvidedScope>true</includeProvidedScope>
-                    <includeRuntimeScope>true</includeRuntimeScope>
-                    <includeSystemScope>true</includeSystemScope>
-                    <includeTestScope>false</includeTestScope>
-                </configuration>
-            </plugin>
+    <plugin>
+            <groupId>org.jreleaser</groupId>
+            <artifactId>jreleaser-maven-plugin</artifactId>
+            <version>1.16.0</version>
+            <configuration>
+        <configFile>${project.basedir}/jreleaser.yml</configFile>
+    </configuration>
+</plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-source-plugin</artifactId>
+    <version>3.3.0</version>
+    <executions>
+        <execution>
+            <id>attach-sources</id>
+                        <phase>verify</phase>
+            <goals>
+                <goal>jar-no-fork</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+    <version>3.6.3</version>
+    <executions>
+        <execution>
+            <id>attach-javadocs</id>
+                        <phase>verify</phase>
+            <goals>
+                <goal>jar</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>3.1.1</version>
+    <configuration>
+        <altDeploymentRepository>local::default::file:./target/staging-deploy</altDeploymentRepository>
+        <skip>false</skip>
+    </configuration>
+</plugin>
+ <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>3.1.1</version>
+    <configuration>
+        <altDeploymentRepository>local::default::file:./target/staging-deploy</altDeploymentRepository>
+    </configuration>
+</plugin>   
         </plugins>
     </build>
 </project>
