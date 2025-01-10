@@ -46,6 +46,9 @@ jobs:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw --batch-mode -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml jreleaser:changelog
 
+      - name: Move Changelog
+        run: mv target/jreleaser/CHANGELOG.md ./CHANGELOG.md
+
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
