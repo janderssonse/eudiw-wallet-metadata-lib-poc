@@ -9,19 +9,56 @@ jobs:
   release:
     runs-on: ubuntu-latest
     environment: mainenv
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # For changelog generation to have full history
+          ssh-key: ${{ secrets.SSH_KEY }} #Auth 
+      
+      - name: Configure SSH signing
+        run: |
+          git config --global gpg.format ssh
+          git config --global user.signingkey "${SSH_KEY}"
+          git config --global commit.gpgsign true
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+      
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
+          cache: maven
           
-      - name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v5
+      
+      - name: Update POM version
+        run: |
+          echo "Tag: ${GITHUB_REF_NAME}"
+          TAG=${GITHUB_REF_NAME#v}
+          echo "Version: ${TAG}"
+          mvn versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false
+       
+      - name: Generate Changelog
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./mvnw --batch-mode -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml jreleaser:changelog
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          gpg_private_key: ${{ secrets.JRELEASER_GPG_SECRET_KEY }}
-          passphrase: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
+          commit_message: |
+            chore(release): ${GITHUB_REF_NAME}
+            
+            Skip CI as this is an automated release commit.
+            
+            [skip ci]
+          file_pattern: 'pom.xml CHANGELOG.md'
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_options: '--signoff'
           
       - name: Release with JReleaser
         env:
@@ -31,7 +68,7 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
           M2_USER_NAME: ${{ secrets.M2_USER_NAME }}
           M2_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw --batch-mode -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml deploy jreleaser:full-release
+        run: ./mvnw --batch-mode -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml deploy jreleaser:full-release -Jreleaser.changelog.skip=true
         
       - name: JReleaser output
         if: always()
