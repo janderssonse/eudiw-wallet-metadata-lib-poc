@@ -52,6 +52,7 @@ jobs:
         run: |
           git fetch origin main:main
           git checkout main
+          git branch --set-upstream-to=origin/main main
 
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
@@ -66,6 +67,7 @@ jobs:
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"
           commit_options: '--signoff'
+          branch: main
           
       - name: Release with JReleaser
         env:
