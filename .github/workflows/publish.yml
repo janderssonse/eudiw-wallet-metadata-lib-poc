@@ -48,6 +48,11 @@ jobs:
       - name: Move Changelog
         run: mv target/jreleaser/release/CHANGELOG.md ./CHANGELOG.md
 
+      - name: Switch to main branch
+        run: |
+          git fetch origin main:main
+          git checkout main
+
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
