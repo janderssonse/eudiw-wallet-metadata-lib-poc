@@ -75,7 +75,7 @@ jobs:
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.JRELEASER_GPG_PUBLIC_KEY }}
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.JRELEASER_GPG_SECRET_KEY }}
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
-          M2_USER_NAME: ${{ secrets.M2_USERSECRET }}
+          M2_USER_NAME: ${{ secrets.M2_USER_NAME }}
           M2_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode --no-transfer-progress -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml deploy jreleaser:full-release -Djreleaser.changelog.enabled=false
         
