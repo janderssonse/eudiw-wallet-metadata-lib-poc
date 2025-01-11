@@ -58,7 +58,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: |
-            chore(release): ${GITHUB_REF_NAME}
+            chore(release): ${{ github.ref_name }}
             
             Skip CI as this is an automated release commit.
             
