@@ -3,8 +3,10 @@ project:
   name: eudiw-wallet-metadata-library-poc
   description: A lib for eudiw-wallet-issuer-poc. Test and PoC only
   license: EUPL-1.2 
-  copyright: 2025 Digg - The Agency for Digital Government
+  copyright: Digg - The Agency for Digital Government
   inceptionYear: 2025
+  authors:
+    - Lux Interior
   snapshot:
     pattern: .*-SNAPSHOT
     label: early-access
@@ -72,14 +74,24 @@ catalog:
       pack:
         enabled: true
 
+distributions:
+  library:
+    type: JAVA_BINARY
+    artifacts:
+      - path: target/eudiw-wallet-metadata-lib-poc-{{projectVersion}}.jar
 
-# Artifact configuration
-# distributions:
-#   library:
-#     artifacts:
-#       - path: target/{{distributionName}}-{{projectVersion}}.jar
-#         transform: "{{distributionName}}-{{projectVersion}}.jar"
-#       - path: target/{{distributionName}}-{{projectVersion}}-javadoc.jar
-#         transform: "{{distributionName}}-{{projectVersion}}-javadoc.jar"
-#       - path: target/{{distributionName}}-{{projectVersion}}-sources.jar
-#         transform: "{{distributionName}}-{{projectVersion}}-sources.jar"
+  library-javadoc:
+    type: JAVA_BINARY
+    artifacts:
+      - path: target/eudiw-wallet-metadata-lib-poc-{{projectVersion}}-javadoc.jar
+
+  library-sources:
+    type: JAVA_BINARY
+    artifacts:
+      - path: target/eudiw-wallet-metadata-lib-poc-{{projectVersion}}-sources.jar
+
+      
+distributions:
+  library:
+    artifacts:
+      - path: target/eudiw-wallet-metadata-lib-poc-{{projectVersion}}.jar
