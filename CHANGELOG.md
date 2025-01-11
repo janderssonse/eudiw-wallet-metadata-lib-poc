@@ -1,8 +1,8 @@
 ## Changelog
 
 ## 🧰 Tasks
-- 2c3a3a2 add gh tok
-- da56718 **release**: v0.0.25
+- 508c48e add gh tok
+- 6b6328e **release**: v0.0.26
 
 
 ## Contributors
