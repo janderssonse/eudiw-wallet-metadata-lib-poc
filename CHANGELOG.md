@@ -1,8 +1,8 @@
 ## Changelog
 
 ## 🧰 Tasks
-- ccf2ef7 add branch upstream ref
-- 0c66c77 **release**: ${GITHUB_REF_NAME}
+- fec35fe add changelog skip
+- a952e10 **release**: v0.0.20
 
 
 ## Contributors
