@@ -8,27 +8,47 @@
     <version>0.0.23</version>
 
     <name>EUDIW Wallet Metadata Lib PoC</name>
-  <description>Sample app</description>
-  <url>https://acme.com/app</url>
-  <inceptionYear>2021</inceptionYear>
+    <description>Sample app</description>
+    <url>https://acme.com/app</url>
+    <inceptionYear>2021</inceptionYear>
 
     <properties>
         <java.version>21</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>2.0.16</slf4j.version>
     </properties>
 
-  <licenses>
-    <license>
-      <name>Apache-2.0</name>
-      <url>https://spdx.org/licenses/Apache-2.0.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  
-    <repositories>
+    <developers>
+        <developer>
+            <id>your-username</id>
+            <name>Your Name</name>
+            <email>your-email@example.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <organization>Your Organization</organization>
+            <organizationUrl>https://your-organization.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <!-- SCM Block -->
+    <scm>
+        <url>https://github.com/your-org/eudiw-wallet-metadata-lib-poc</url>
+        <connection>scm:git:https://github.com/your-org/eudiw-wallet-metadata-lib-poc.git</connection>
+        <developerConnection>scm:git:git@github.com:your-org/eudiw-wallet-metadata-lib-poc.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://spdx.org/licenses/Apache-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- <repositories>
         <repository>
             <id>central</id>
             <name>Maven Central</name>
@@ -39,7 +59,7 @@
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/danneleaf/openid-federation-base</url>
         </repository>
-    </repositories>
+    </repositories> -->
 
     <distributionManagement>
         <repository>
@@ -93,7 +113,7 @@
         </dependency>
     </dependencies>
 
-    
+
     <build>
         <plugins>
             <plugin>
@@ -104,53 +124,53 @@
                     <release>${java.version}</release>
                 </configuration>
             </plugin>
-    <plugin>
-            <groupId>org.jreleaser</groupId>
-            <artifactId>jreleaser-maven-plugin</artifactId>
-            <version>1.16.0</version>
-        <configuration>
-        <configFile>${project.basedir}/jreleaser.yml</configFile>
-    </configuration>
-</plugin>
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-source-plugin</artifactId>
-    <version>3.3.0</version>
-    <executions>
-        <execution>
-            <id>attach-sources</id>
+            <plugin>
+                <groupId>org.jreleaser</groupId>
+                <artifactId>jreleaser-maven-plugin</artifactId>
+                <version>1.16.0</version>
+                <configuration>
+                    <configFile>${project.basedir}/jreleaser.yml</configFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
                         <phase>verify</phase>
-            <goals>
-                <goal>jar-no-fork</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-javadoc-plugin</artifactId>
-    <version>3.6.3</version>
-    <executions>
-        <execution>
-            <id>attach-javadocs</id>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
                         <phase>verify</phase>
-            <goals>
-                <goal>jar</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-deploy-plugin</artifactId>
-    <version>3.1.1</version>
-    <configuration>
-        <altDeploymentRepository>local::file:./target/staging-deploy</altDeploymentRepository>
-        <skip>false</skip>
-    </configuration>
-</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <altDeploymentRepository>local::file:./target/staging-deploy</altDeploymentRepository>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
