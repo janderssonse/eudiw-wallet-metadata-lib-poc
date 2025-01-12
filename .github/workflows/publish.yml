@@ -44,7 +44,7 @@ jobs:
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v3
         with:
-          config: cliff.toml
+          config: development/gitcliff-gh-keepachangelog.toml
           args: --verbose
         env:
           OUTPUT: CHANGELOG.md
@@ -54,8 +54,8 @@ jobs:
       #     JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #   run: mvn --batch-mode --no-transfer-progress -s $GITHUB_WORKSPACE/development/maven-gh-settings.xml jreleaser:changelog -DskipTests
 
-      - name: Move Changelog
-        run: mv target/jreleaser/release/CHANGELOG.md ./CHANGELOG.md
+      # - name: Move Changelog
+      #   run: mv target/jreleaser/release/CHANGELOG.md ./CHANGELOG.md
 
       - name: Switch to main branch
         run: |
