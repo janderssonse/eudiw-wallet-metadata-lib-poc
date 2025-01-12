@@ -87,16 +87,16 @@
     {
       "description": "Build plugins",
       "groupName": "maven-plugins",
-      "matchPackagePatterns": [
-        "^org\\.apache\\.maven\\.plugins:.+-plugin$",
-        "^org\\.jreleaser:jreleaser-maven-plugin$"
-      ],
       "addLabels": [
         "build"
       ],
       "schedule": [
         "after 10pm every weekday",
         "before 5am every weekday"
+      ],
+      "matchPackageNames": [
+        "/^org\\.apache\\.maven\\.plugins:.+-plugin$/",
+        "/^org\\.jreleaser:jreleaser-maven-plugin$/"
       ]
     },
     {
