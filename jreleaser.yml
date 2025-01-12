@@ -1,31 +1,70 @@
 # Basic project metadata
 project:
   name: eudiw-wallet-metadata-library-poc
-  description: A lib for eudiw-wallet-issuer-poc. Test and PoC only
+  description: A helper lib for eudiw-wallet-issuer-poc. Test and PoC only
   license: EUPL-1.2 
   copyright: 2025 Digg - The Agency for Digital Government
   inceptionYear: 2025
   authors:
-    - Lux Interior
+    - Digg - Agency for Digital Government
   snapshot:
     pattern: .*-SNAPSHOT
     label: early-access
-    fullChangelog: false
+    fullChangelog: true
 
 # GitHub release configuration
-
 release:
   github:
     owner: janderssonse
     overwrite: true     # Allows updating existing releases
-    draft: false        # Creates as final release, not draft
+    draft: true        # Creates as final release, not draft
     sign: true          # Signs release assets
     branch: main
     changelog:
       formatted: 'ALWAYS'
+      links: true
+      skipMergeCommits: true
       preset: 'conventional-commits'
       contributors:
-        enabled: true
+        enabled: false
+      format: |
+        # Changelog
+        All notable changes to this project will be documented in this file.
+        
+        The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.1/),
+        and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+        
+        {{#each releases}}
+        ## [{{name}}]{{#if dateString}} - {{dateString}}{{/if}}
+        {{#if description}}
+        > {{description}}
+        {{/if}}
+        
+        {{#each categories}}
+        ### {{name}}
+        
+        {{#each commits}}
+        - {{message}} {{#if scope}}(_{{scope}}_){{/if}}
+        {{/each}}
+        {{/each}}
+        
+        {{#if contributors}}
+        ### Contributors
+        {{#each contributors}}
+        * {{name}}
+        {{/each}}
+        {{/if}}
+        {{/each}}
+
+        {{#each releases}}
+        {{#unless @first}}
+        [{{name}}]: https://github.com/{{owner}}/{{repo}}/compare/v{{previous.name}}...v{{name}}
+        {{/unless}}
+        {{#if @first}}
+        [{{name}}]: https://github.com/{{owner}}/{{repo}}/releases/tag/v{{name}}
+        {{/if}}
+        {{/each}}
+  
       hide:
         categories: ['merge']
 
@@ -33,16 +72,6 @@ checksum:
   algorithms:
     - SHA-256
     - SHA-512
-
-# distributions:
-#   library:
-#     files:
-#       - input: pom.xml
-#         output: pom.xml
-#         replacements:
-#           - search: "<version>\\s*{{currentVersion}}\\s*</version>"
-#             replace: "<version>{{projectVersion}}</version>"
-#             only_if: "<artifactId>eudiw-wallet-metadata-lib-poc</artifactId>"
 
 
 # GPG signing configuration
@@ -73,7 +102,8 @@ catalog:
         - SPDX_JSON
       pack:
         enabled: true
-      
+        
+# Syft need to know what to sign
 distributions:
   library:
     artifacts:

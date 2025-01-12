@@ -1,176 +1,216 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>se.digg.wallet</groupId>
-    <artifactId>eudiw-wallet-metadata-lib-poc</artifactId>
-    <version>0.0.28</version>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <name>EUDIW Wallet Metadata Lib PoC</name>
-    <description>Sample app</description>
-    <url>https://acme.com/app</url>
-    <inceptionYear>2021</inceptionYear>
+  <!-- Project coordinates -->
+  <groupId>se.digg.wallet</groupId>
+  <artifactId>eudiw-wallet-metadata-lib-poc</artifactId>
+  <version>0.0.26</version>
 
-    <properties>
-        <java.version>21</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <slf4j.version>2.0.16</slf4j.version>
-    </properties>
+  <!-- Project information -->
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Sample app</description>
+  <url>https://github.com/janderssonse/eudiw-wallet-metadata-lib-poc</url>
+  <inceptionYear>2025</inceptionYear>
 
-    <developers>
-        <developer>
-            <id>your-username</id>
-            <name>Your Name</name>
-            <email>your-email@example.com</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <organization>Your Organization</organization>
-            <organizationUrl>https://your-organization.com</organizationUrl>
-        </developer>
-    </developers>
+  <!-- Project properties -->
+  <properties>
+    <!-- Build properties -->
+    <java.version>21</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+    <!-- Dependency versions -->
+    <openid-federation.version>2.0.2</openid-federation.version>
+    <slf4j.version>2.0.16</slf4j.version>
+    <junit-jupiter.version>5.11.2</junit-jupiter.version>
+    <mockito.version>5.12.0</mockito.version>
+    <jsonassert.version>1.5.3</jsonassert.version>
 
-    <!-- SCM Block -->
-    <scm>
-        <url>https://github.com/your-org/eudiw-wallet-metadata-lib-poc</url>
-        <connection>scm:git:https://github.com/your-org/eudiw-wallet-metadata-lib-poc.git</connection>
-        <developerConnection>scm:git:git@github.com:your-org/eudiw-wallet-metadata-lib-poc.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-    <licenses>
-        <license>
-            <name>Apache-2.0</name>
-            <url>https://spdx.org/licenses/Apache-2.0.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+    <!-- Plugin versions -->
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+    <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
+    <jreleaser-maven-plugin.version>1.16.0</jreleaser-maven-plugin.version>
+    <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
+  </properties>
 
-    <!-- <repositories>
-        <repository>
-            <id>central</id>
-            <name>Maven Central</name>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/danneleaf/openid-federation-base</url>
-        </repository>
-    </repositories> -->
+  <!-- Project metadata -->
+  <developers>
+    <developer>
+      <name>extern.stefan.santesson@digg.se</name>
+      <organization>Digg</organization>
+      <organizationUrl>https://www.digg.se</organizationUrl>
+    </developer>
+  </developers>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/janderssonset /eudiw-wallet-metadata-lib-poc</url>
-        </repository>
-    </distributionManagement>
+  <licenses>
+    <license>
+      <name>EUPL-1.2</name>
+      <url>https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
+  <scm>
+    <connection>scm:git:https://github.com/janderssonse/eudiw-wallet-metadata-lib-poc.git</connection>
+    <developerConnection>scm:git:git@github.com:janderssonse/eudiw-wallet-metadata-lib-poc.git</developerConnection>
+    <url>https://github.com/janderssonse/eudiw-wallet-metadata-lib-poc/tree/main</url>
+    <tag>HEAD</tag>
+  </scm>
 
-    <dependencies>
-        <dependency>
-            <groupId>se.oidc.oidfed</groupId>
-            <artifactId>openid-federation-base</artifactId>
-            <version>2.0.2</version>
-        </dependency>
+  <!-- Deployment configuration -->
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/janderssonse/eudiw-wallet-metadata-lib-poc</url>
+    </repository>
+    <snapshotRepository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/janderssonse/eudiw-wallet-metadata-lib-poc</url>
+    </snapshotRepository>
+  </distributionManagement>
 
-        <!-- Scope TEST -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.11.2</version>
-            <scope>test</scope>
-        </dependency>
+  <!-- Dependencies -->
+  <dependencies>
+    <!-- Core-->
+    <dependency>
+      <groupId>se.oidc.oidfed</groupId>
+      <artifactId>openid-federation-base</artifactId>
+      <version>${openid-federation.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>test</scope>
-        </dependency>
+    <!-- Test -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit-jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>5.12.0</version>
-            <scope>test</scope>
-        </dependency>
+    <!-- Test utilities -->
+    <dependency>
+      <groupId>org.skyscreamer</groupId>
+      <artifactId>jsonassert</artifactId>
+      <version>${jsonassert.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.12.0</version>
-            <scope>test</scope>
-        </dependency>
+  <!-- Build configuration -->
+  <build>
+    <plugins>
+      <!-- Compilation -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <release>${java.version}</release>
+        </configuration>
+      </plugin>
 
-        <dependency>
-            <groupId>org.skyscreamer</groupId>
-            <artifactId>jsonassert</artifactId>
-            <version>1.5.3</version>
-        </dependency>
-    </dependencies>
+      <!-- Enforcer for build environment -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven-enforcer-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>[3.8.0,)</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>[21,)</version>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
+      <!-- Source JAR -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-                <configuration>
-                    <release>${java.version}</release>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jreleaser</groupId>
-                <artifactId>jreleaser-maven-plugin</artifactId>
-                <version>1.16.0</version>
-                <configuration>
-                    <configFile>${project.basedir}/jreleaser.yml</configFile>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+      <!-- Javadoc JAR -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.3</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+      <!-- Deployment -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${maven-deploy-plugin.version}</version>
+        <configuration>
+          <altDeploymentRepository>local::file:./target/staging-deploy</altDeploymentRepository>
+          <skip>false</skip>
+        </configuration>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <altDeploymentRepository>local::file:./target/staging-deploy</altDeploymentRepository>
-                    <skip>false</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+      <!-- Release -->
+      <plugin>
+        <groupId>org.jreleaser</groupId>
+        <artifactId>jreleaser-maven-plugin</artifactId>
+        <version>${jreleaser-maven-plugin.version}</version>
+        <configuration>
+          <configFile>${project.basedir}/jreleaser.yml</configFile>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
