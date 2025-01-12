@@ -39,6 +39,7 @@ jobs:
 
       - name: Run tests
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          M2_USER_NAME: ${{ secrets.M2_USER_NAME }}
+          M2_ACCESS_TOKEN: ${{ secrets.M2_ACCESS_TOKEN }}
         run: mvn $MAVEN_CLI_OPTS test
  
