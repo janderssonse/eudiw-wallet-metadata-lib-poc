@@ -16,12 +16,18 @@ permissions:
   contents: read
 
 jobs:
+  commitlint:
+    uses: ./.github/workflows/commitlint.yml
   dependencyreviewlint:
     uses: ./.github/workflows/dependencyreview.yml
+# license:
+  #   uses: ./.github/workflows/license.yml
+  misclint:
+    permissions:
+      contents: read
+      security-events: write
+    uses: ./.github/workflows/misclint.yml
   test:
-    needs: [dependencyreviewlint]
+    #needs: [commitlint,license, misclint, dependencyreviewlint]
+    needs: [commitlint, dependencyreviewlint]
     uses: ./.github/workflows/test.yml
-  # publish-jar:
-  #   if: startsWith(github.ref, 'refs/tags/v') && ${{ !failure() }}
-  #   needs: [test]
-  #   uses: ./.github/workflows/publish-to-github-packages.yml

@@ -5,6 +5,9 @@ on:
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
 
+env:
+  MAVEN_CLI_OPTS: "--batch-mode --no-transfer-progress --errors --fail-at-end -Dstyle.color=always -DinstallAtEnd=true -DdeployAtEnd=true -s $GITHUB_WORKSPACE/development/maven-gh-settings.xml"
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -37,9 +40,9 @@ jobs:
       - name: Update POM version
         run: |
           echo "Tag: ${GITHUB_REF_NAME}"
-          TAG=${GITHUB_REF_NAME#v}
+          TAG="${GITHUB_REF_NAME#v}"
           echo "Version: ${TAG}"
-          mvn --batch-mode --no-transfer-progress versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false -DskipTests
+          mvn versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false -DskipTests
        
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v3
@@ -86,7 +89,7 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
           M2_USER_NAME: ${{ secrets.M2_USER_NAME }}
           M2_ACCESS_TOKEN: ${{ secrets.M2_ACCESS_TOKEN }}
-        run: mvn --batch-mode --no-transfer-progress -s $GITHUB_WORKSPACE/development/maven-gh-settings.xml deploy jreleaser:full-release -Djreleaser.changelog.enabled=false -DskipTests
+        run: mvn deploy jreleaser:full-release -DskipTests
         
       - name: JReleaser output
         if: always()
