@@ -16,6 +16,7 @@ permissions:
 jobs:
   test:
     name: Test
+    environment: mainenv
     runs-on: ubuntu-latest
     strategy:
       matrix:
