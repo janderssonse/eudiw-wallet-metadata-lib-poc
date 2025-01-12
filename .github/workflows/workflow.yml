@@ -29,6 +29,9 @@ jobs:
     uses: ./.github/workflows/misclint.yml
   test:
     if: always() 
+    permissions:
+      contents: read
+      packages: read
     #needs: [commitlint,license, misclint, dependencyreviewlint]
     needs: [commitlint, dependencyreviewlint]
     uses: ./.github/workflows/test.yml

@@ -6,26 +6,26 @@ name: mvn Test
 
 on: [workflow_call]
 
-env:
-  MAVEN_CLI_OPTS: "--batch-mode --no-transfer-progress --errors --fail-at-end -Dstyle.color=always -DinstallAtEnd=true -DdeployAtEnd=true -s $GITHUB_WORKSPACE/development/maven-gh-settings.xml"
 
-  permissions:
-  contents: read
 
 jobs:
   test:
     name: Test
+    environment: mainenv
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     strategy:
       matrix:
         java-version: ['21'] 
         os: [ubuntu-latest]
 
     steps:
-      - name: Harden GitHub runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
+      # - name: Harden GitHub runner
+      #   uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+      #   with:
+      #     egress-policy: audit
 
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -36,9 +36,12 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
           cache: 'maven'
+ 
 
       - name: Run tests
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn test
+          M2_USER_NAME: ${{ github.actor }}
+          M2_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAVEN_CLI_OPTS: --batch-mode --no-transfer-progress --errors --fail-at-end -Dstyle.color=always -DinstallAtEnd=true -DdeployAtEnd=true -s development/maven-gh-settings.xml
+        run: mvn $MAVEN_CLI_OPTS test
  
