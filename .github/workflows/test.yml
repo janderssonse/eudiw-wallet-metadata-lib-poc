@@ -7,7 +7,7 @@ name: mvn Test
 on: [workflow_call]
 
 env:
-  MAVEN_CLI_OPTS: "--batch-mode --no-transfer-progress --errors --fail-at-end -Dstyle.color=always -DinstallAtEnd=true -DdeployAtEnd=true -s $GITHUB_WORKSPACE/development/maven-gh-settings.xml"
+  MAVEN_CLI_OPTS: "--batch-mode --no-transfer-progress --errors --fail-at-end -Dstyle.color=always -DinstallAtEnd=true -DdeployAtEnd=true -s development/maven-gh-settings.xml"
 
 permissions:
   contents: read
