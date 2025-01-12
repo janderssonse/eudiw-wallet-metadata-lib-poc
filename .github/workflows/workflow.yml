@@ -28,7 +28,7 @@ jobs:
       security-events: write
     uses: ./.github/workflows/misclint.yml
   test:
-    if: success() || failure() 
+    if: always() 
     #needs: [commitlint,license, misclint, dependencyreviewlint]
     needs: [commitlint, dependencyreviewlint]
     uses: ./.github/workflows/test.yml
