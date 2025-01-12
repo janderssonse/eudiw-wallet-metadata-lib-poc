@@ -1,0 +1,139 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    ":gitSignOff",
+    ":maintainLockFilesWeekly",
+    ":automergeMinor",
+    ":semanticCommits"
+  ],
+  "semanticCommitType": "build",
+  "semanticCommitScope": "deps",
+  "commitMessageLowerCase": "auto",
+  "commitBody": "Signed-off-by: {{{gitAuthor}}}",
+  "vulnerabilityAlerts": {
+    "labels": [
+      "security"
+    ],
+    "enabled": true,
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "addLabels": [
+        "actions"
+      ],
+      "pinDigests": true,
+      "groupName": "github actions",
+      "schedule": [
+        "after 10pm every weekday",
+        "before 5am every weekday"
+      ]
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "slsa-framework/slsa-github-generator"
+      ],
+      "pinDigests": false
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "addLabels": [
+        "java",
+        "dependencies"
+      ]
+    },
+    {
+      "description": "Maven dependencies",
+      "matchManagers": [
+        "maven"
+      ],
+      "addLabels": [
+        "java",
+        "dependencies"
+      ]
+    },
+    {
+      "description": "Test dependencies",
+      "groupName": "test",
+      "matchPackageNames": [
+        "org.junit.jupiter:junit-jupiter",
+        "org.mockito:mockito-core",
+        "org.mockito:mockito-junit-jupiter",
+        "org.skyscreamer:jsonassert"
+      ],
+      "addLabels": [
+        "test-dependencies"
+      ]
+    },
+    {
+      "description": "Logging dependencies",
+      "groupName": "logging",
+      "matchPackageNames": [
+        "org.slf4j:slf4j-simple"
+      ],
+      "addLabels": [
+        "logging"
+      ]
+    },
+    {
+      "description": "Build plugins",
+      "groupName": "maven-plugins",
+      "matchPackagePatterns": [
+        "^org\\.apache\\.maven\\.plugins:.+-plugin$",
+        "^org\\.jreleaser:jreleaser-maven-plugin$"
+      ],
+      "addLabels": [
+        "build"
+      ],
+      "schedule": [
+        "after 10pm every weekday",
+        "before 5am every weekday"
+      ]
+    },
+    {
+      "description": "OpenID Federation dependencies - Major updates",
+      "groupName": "openid-federation major",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "matchPackageNames": [
+        "se.oidc.oidfed:openid-federation-base"
+      ],
+      "labels": [
+        "major-update",
+        "openid-federation"
+      ],
+      "schedule": [
+        "after 10pm every weekday",
+        "before 5am every weekday"
+      ]
+    },
+    {
+      "description": "OpenID Federation dependencies - Non-major updates",
+      "groupName": "openid-federation non-major",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "se.oidc.oidfed:openid-federation-base"
+      ],
+      "labels": [
+        "openid-federation"
+      ],
+      "schedule": [
+        "after 10pm every weekday",
+        "before 5am every weekday"
+      ]
+    }
+  ]
+}
