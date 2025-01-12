@@ -30,41 +30,25 @@ release:
       format: |
         # Changelog
         All notable changes to this project will be documented in this file.
-        
+
         The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.1/),
         and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-        
+
         {{#each releases}}
-        ## [{{name}}]{{#if dateString}} - {{dateString}}{{/if}}
-        {{#if description}}
-        > {{description}}
-        {{/if}}
-        
+        ## [{{name}}] - {{dateString}}
+
         {{#each categories}}
         ### {{name}}
-        
         {{#each commits}}
-        - {{message}} {{#if scope}}(_{{scope}}_){{/if}}
+        - {{message}}
         {{/each}}
         {{/each}}
-        
-        {{#if contributors}}
-        ### Contributors
-        {{#each contributors}}
-        * {{name}}
-        {{/each}}
-        {{/if}}
+
         {{/each}}
 
         {{#each releases}}
-        {{#unless @first}}
-        [{{name}}]: https://github.com/{{owner}}/{{repo}}/compare/v{{previous.name}}...v{{name}}
-        {{/unless}}
-        {{#if @first}}
-        [{{name}}]: https://github.com/{{owner}}/{{repo}}/releases/tag/v{{name}}
-        {{/if}}
+        [{{name}}]: {{#if @first}}https://github.com/{{owner}}/{{repo}}/releases/tag/v{{name}}{{else}}https://github.com/{{owner}}/{{repo}}/compare/v{{previous.name}}...v{{name}}{{/if}}
         {{/each}}
-  
       hide:
         categories: ['merge']
 
@@ -102,7 +86,7 @@ catalog:
         - SPDX_JSON
       pack:
         enabled: true
-        
+
 # Syft need to know what to sign
 distributions:
   library:

@@ -39,12 +39,12 @@ jobs:
           echo "Tag: ${GITHUB_REF_NAME}"
           TAG=${GITHUB_REF_NAME#v}
           echo "Version: ${TAG}"
-          mvn --batch-mode --no-transfer-progress versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false
+          mvn --batch-mode --no-transfer-progress versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false -DskipTests
        
       - name: Generate Changelog
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn --batch-mode --no-transfer-progress -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml jreleaser:changelog
+        run: mvn --batch-mode --no-transfer-progress -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml jreleaser:changelog -DskipTests
 
       - name: Move Changelog
         run: mv target/jreleaser/release/CHANGELOG.md ./CHANGELOG.md
@@ -78,7 +78,7 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
           M2_USER_NAME: ${{ secrets.M2_USER_NAME }}
           M2_ACCESS_TOKEN: ${{ secrets.M2_ACCESS_TOKEN }}
-        run: mvn --batch-mode --no-transfer-progress -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml deploy jreleaser:full-release -Djreleaser.changelog.enabled=false
+        run: mvn --batch-mode --no-transfer-progress -s $GITHUB_WORKSPACE/.github/workflows/maven-gh-settings.xml deploy jreleaser:full-release -Djreleaser.changelog.enabled=false -DskipTests
         
       - name: JReleaser output
         if: always()
