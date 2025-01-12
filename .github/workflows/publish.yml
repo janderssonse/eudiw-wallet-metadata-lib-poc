@@ -42,7 +42,7 @@ jobs:
           echo "Tag: ${GITHUB_REF_NAME}"
           TAG="${GITHUB_REF_NAME#v}"
           echo "Version: ${TAG}"
-          mvn versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false -DskipTests
+          mvn $MAVEN_CLI_OPTS versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false -DskipTests
        
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v3
@@ -89,7 +89,7 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
           M2_USER_NAME: ${{ secrets.M2_USER_NAME }}
           M2_ACCESS_TOKEN: ${{ secrets.M2_ACCESS_TOKEN }}
-        run: mvn deploy jreleaser:full-release -DskipTests
+        run: mvn $MAVEN_CLI_OPTS deploy jreleaser:full-release -DskipTests
         
       - name: JReleaser output
         if: always()
