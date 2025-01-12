@@ -31,7 +31,7 @@ jobs:
     if: always() 
     permissions:
       contents: read
-      packages: write
+      packages: read
     #needs: [commitlint,license, misclint, dependencyreviewlint]
     needs: [commitlint, dependencyreviewlint]
     uses: ./.github/workflows/test.yml
