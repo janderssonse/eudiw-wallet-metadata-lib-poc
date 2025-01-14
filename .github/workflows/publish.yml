@@ -45,7 +45,7 @@ jobs:
           mvn $MAVEN_CLI_OPTS versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false -DskipTests
        
       - name: Generate a changelog
-        uses: orhun/git-cliff-action@v3
+        uses: orhun/git-cliff-action@4a4a951bc43fafe41cd2348d181853f52356bee7 # v4
         with:
           config: development/gitcliff-gh-keepachangelog.toml
           args: --verbose
