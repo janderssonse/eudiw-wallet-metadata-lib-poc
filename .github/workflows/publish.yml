@@ -17,12 +17,12 @@ jobs:
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0  # For changelog generation to have full history
       
       - name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v6
+        uses: crazy-max/ghaction-import-gpg@cb9bde2e2525e640591a934b1fd28eef1dcaf5e5 # v6
         with:
           gpg_private_key: ${{ secrets.JRELEASER_GPG_SECRET_KEY }}
           passphrase: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
@@ -30,7 +30,7 @@ jobs:
           git_commit_gpgsign: true 
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -45,7 +45,7 @@ jobs:
           mvn $MAVEN_CLI_OPTS versions:set -DnewVersion=${TAG} -DgenerateBackupPoms=false -DskipTests
        
       - name: Generate a changelog
-        uses: orhun/git-cliff-action@v3
+        uses: orhun/git-cliff-action@b946ed27a675d653b308f29a7bbad813b85bf7aa # v3
         with:
           config: development/gitcliff-gh-keepachangelog.toml
           args: --verbose
@@ -67,7 +67,7 @@ jobs:
           git branch --set-upstream-to=origin/main main
 
       - name: Commit and Push Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5
         with:
           commit_message: |
             chore(release): ${{ github.ref_name }}
@@ -93,7 +93,7 @@ jobs:
         
       - name: JReleaser output
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4
         with:
           name: jreleaser-logs
           path: |
