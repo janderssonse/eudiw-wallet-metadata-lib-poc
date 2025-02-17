@@ -21,7 +21,7 @@
           security-events: write
         steps:
           - name: Harden GitHub runner
-            uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+            uses: step-security/harden-runner@4d991eb9b905ef189e4c376166672c3f2f230481 # v2.11.0
             with:
               egress-policy: audit
     
@@ -32,12 +32,12 @@
     
           - name: MegaLinter lint
             id: ml
-            uses: oxsecurity/megalinter@d8c95fc6f2237031fb9e9322b0f97100168afa6e # v8.2.0
+            uses: oxsecurity/megalinter@ec124f7998718d79379a3c5b39f5359952baf21d # v8.4.2
             env:
               MEGALINTER_CONFIG: ./development/megalinter.yml
               DEFAULT_WORKSPACE: .
     
           - name: Upload MegaLinter scan results to GitHub Security tab
-            uses: github/codeql-action/upload-sarif@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
+            uses: github/codeql-action/upload-sarif@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0 # v3.28.9
             with:
               sarif_file: megalinter-reports/megalinter-report.sarif
